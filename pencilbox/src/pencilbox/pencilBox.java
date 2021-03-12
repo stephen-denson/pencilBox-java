@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class pencilBox {
 	
+	
 	public static void removeBlank(String fl) throws IOException {
 		File oldFile = new File(fl);
 		Scanner deleter = new Scanner(oldFile);
@@ -28,6 +29,19 @@ public class pencilBox {
 		deleter.close();
 		
 	}
+	
+	
+	public static void showHelp() {
+		System.out.println("-----------------HELP------------------");
+		System.out.println("the following arguments are valid:");
+		System.out.println("1) add <item you want to add>");
+		System.out.println("2) remove <item you wanna remove>");
+		System.out.println("3) view (views the items inside the pencil box and their quantity");
+		System.out.println("4) show help shows the help menu");
+		
+	}
+	
+	
 	private static Scanner x;
 	public static void main(String args[]) {
 		
@@ -72,6 +86,7 @@ public class pencilBox {
 						else {
 							pw.println(item + "," + quantity);
 						}
+						
 					}
 					br.close();
 					x.close();
@@ -106,9 +121,14 @@ public class pencilBox {
 						quantity = x.next();
 						if(item.equals(args[1])) {
 							int i = Integer.parseInt(quantity.trim());
-							i=i-1;
-							quantity = String.valueOf(i);
-							pw.println(item + "," + quantity + "\n");
+							if(i>0) { 
+								i=i-1;
+								quantity = String.valueOf(i);
+								pw.println(item + "," + quantity + "\n");
+							}
+							else {
+								System.out.println("quantity is already zero");
+							}
 						}
 						else {
 							pw.println(item + "," + quantity);
@@ -127,6 +147,10 @@ public class pencilBox {
 					e.printStackTrace();
 				}
 			}
+			if (args.length == 1 && "help".equals(args[0])) {
+				showHelp();
+			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
