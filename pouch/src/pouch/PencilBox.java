@@ -85,8 +85,8 @@ class Sharpener {
 public class PencilBox {
 	
 	enum Path{
-		PATH("C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\temp.csv"),
-		TEMP("C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\tmp.csv");
+		PATH("pouch/temp.csv"),
+		TEMP("pouch/tmp.csv");
 		String FILEPATH;
 		
 		Path(String path){
@@ -150,14 +150,13 @@ public class PencilBox {
 	}
 	
 	public static void add(String[] args) throws IOException {
-		String path = "C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\temp.csv";
 		
 			if("pencil".equalsIgnoreCase(args[1])) {
 				Pencil obj = new Pencil();
 				obj.setBrand(args[2]);
 				obj.setLength(args[3]);
 				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getLength();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true));
+				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
 				bufferedWriter.write(str);
 				bufferedWriter.close();				
 				
@@ -166,7 +165,7 @@ public class PencilBox {
 				obj.setBrand(args[2]);
 				obj.setShape(args[3]);
 				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getShape();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true));
+				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
 				bufferedWriter.write(str);
 				bufferedWriter.close();
 				
@@ -175,7 +174,7 @@ public class PencilBox {
 				obj.setBrand(args[2]);
 				obj.setState(args[3]);
 				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getState();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true));
+				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
 				bufferedWriter.write(str);
 				bufferedWriter.close();
 			}
