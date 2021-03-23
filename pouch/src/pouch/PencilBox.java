@@ -84,6 +84,20 @@ class Sharpener {
 
 public class PencilBox {
 	
+	enum Path{
+		PATH("C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\temp.csv"),
+		TEMP("C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\tmp.csv");
+		String FILEPATH;
+		
+		Path(String path){
+			FILEPATH = path;
+		}
+		
+		public String getPath() {
+			return FILEPATH;
+		}
+	}
+	
 	public static void removeBlank(String fl) throws IOException {
 		File oldFile = new File(fl);
 		Scanner deleter = new Scanner(oldFile);
@@ -102,14 +116,13 @@ public class PencilBox {
 	}
 	
 	public static void view() throws IOException, FileNotFoundException {
-		String path = "C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\temp.csv";
 		String line ="";
-		removeBlank(path);
+		removeBlank(Path.PATH.getPath());
 		
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new FileReader(path));
-			removeBlank(path);
+			bufferedReader = new BufferedReader(new FileReader(Path.PATH.getPath()));
+			removeBlank(Path.PATH.getPath());
 	        while((line = bufferedReader.readLine()) != null) {
 	        	String[] values = line.split(",");	        	
 	        	if(values[0].trim().equalsIgnoreCase("pencil")) {
@@ -174,22 +187,20 @@ public class PencilBox {
 	}
 	
 	public static void remove(String[] args) throws IOException {
-		String path = "C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\temp.csv";
-		String temp = "C:\\Users\\hayth\\eclipse-workspace\\pouch\\src\\pouch\\tmp.csv";
-		File oldFile = new File(path);
-		File newFile = new File(temp);
+		File oldFile = new File(Path.PATH.getPath());
+		File newFile = new File(Path.TEMP.getPath());
 		String item = ""; String property1 = ""; String property2 = "";
 		BufferedWriter bufferedWriter = null;
 		FileWriter fileWriter = null;
 		PrintWriter printWriter = null;
 		Scanner scanner = null;
-		removeBlank(path);
+		removeBlank(Path.PATH.getPath());
 		try {
-			new FileWriter(temp, false).close();
-			fileWriter = new FileWriter(temp,true);
+			new FileWriter(Path.TEMP.getPath(), false).close();
+			fileWriter = new FileWriter(Path.TEMP.getPath(),true);
 			bufferedWriter = new BufferedWriter(fileWriter);
 			printWriter = new PrintWriter(bufferedWriter);
-			scanner = new Scanner(new File(path));
+			scanner = new Scanner(new File(Path.PATH.getPath()));
 			scanner.useDelimiter("[,\n]");
 			
 			
@@ -207,9 +218,9 @@ public class PencilBox {
 			printWriter.close();
 			scanner.close();
 			oldFile.delete();
-			File dump = new File(path);
+			File dump = new File(Path.PATH.getPath());
 			newFile.renameTo(dump);
-			removeBlank(path);
+			removeBlank(Path.PATH.getPath());
 		
 	} finally {
 		if(bufferedWriter != null) {
