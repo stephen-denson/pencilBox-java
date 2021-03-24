@@ -10,75 +10,115 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-class Pencil {
+interface Item {
+	String getItem();
+	String getBrand(); 
+	String getProperty();
+	void setBrand(String str);
+	void setProperty(String str);
+	String print();
+}
+
+class Factory{
+	public Item getObject(String str) {
+		if(str.equalsIgnoreCase("pencil")) {
+			return new Pencil();
+		} else if (str.equalsIgnoreCase("eraser")){
+			return new Eraser();
+		} else if(str.equalsIgnoreCase("sharpener")) {
+			return new Sharpener();
+		} else {
+			return null;
+		}
+	}
+}
+
+class Pencil implements Item{
 	private String brand;
 	private String length;
-	
+
 	public String getItem() {
-		return "pencil";
+		return "Pencil";
 	}
-	
+
 	public String getBrand() {
 		return brand;
 	}
-	
-	public String getLength() {
+
+	public String getProperty() {
 		return length;
+	}
+
+	public String print() {
+		return getItem()+","+getBrand()+","+getProperty();
 	}
 	
 	public void setBrand(String str) {
 		this.brand = str;
 	}
-	public void setLength(String str) {
+	
+	public void setProperty(String str) {
 		this.length = str;
 	}
 }
 
-class Eraser {
+class Eraser implements Item{
+
 	private String brand;
-	private String shape;
-	
+	private String length;
+
 	public String getItem() {
-		return "eraser";
+		return "Eraser";
 	}
-	
+
 	public String getBrand() {
 		return brand;
 	}
-	
-	public String getShape() {
-		return shape;
+
+	public String getProperty() {
+		return length;
+	}
+
+	public String print() {
+		return getItem()+","+getBrand()+","+getProperty();
 	}
 	
 	public void setBrand(String str) {
 		this.brand = str;
 	}
-	public void setShape(String str) {
-		this.shape = str;
+	
+	public void setProperty(String str) {
+		this.length = str;
 	}
 }
 
-class Sharpener {
+class Sharpener implements Item{
+
 	private String brand;
-	private String state;
-	
+	private String length;
+
 	public String getItem() {
 		return "sharpener";
 	}
-	
+
 	public String getBrand() {
 		return brand;
 	}
-	
-	public String getState() {
-		return state;
+
+	public String getProperty() {
+		return length;
+	}
+
+	public String print() {
+		return getItem()+","+getBrand()+","+getProperty();
 	}
 	
 	public void setBrand(String str) {
 		this.brand = str;
 	}
-	public void setState(String str) {
-		this.state = str;
+	
+	public void setProperty(String str) {
+		this.length = str;
 	}
 }
 
@@ -151,33 +191,14 @@ public class PencilBox {
 	
 	public static void add(String[] args) throws IOException {
 		
-			if("pencil".equalsIgnoreCase(args[1])) {
-				Pencil obj = new Pencil();
-				obj.setBrand(args[2]);
-				obj.setLength(args[3]);
-				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getLength();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
-				bufferedWriter.write(str);
-				bufferedWriter.close();				
-				
-			} else if("eraser".equalsIgnoreCase(args[1])) {
-				Eraser obj = new Eraser();
-				obj.setBrand(args[2]);
-				obj.setShape(args[3]);
-				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getShape();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
-				bufferedWriter.write(str);
-				bufferedWriter.close();
-				
-			} else if("sharpener".equalsIgnoreCase(args[1])) {
-				Sharpener obj = new Sharpener();
-				obj.setBrand(args[2]);
-				obj.setState(args[3]);
-				String str = obj.getItem() + "," + obj.getBrand() + "," + obj.getState();
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
-				bufferedWriter.write(str);
-				bufferedWriter.close();
-			}
+		Factory factory = new Factory();
+		Item obj = factory.getObject(args[1]);
+		obj.setBrand(args[2]);
+		obj.setProperty(args[3]);
+		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Path.PATH.getPath(), true));
+		bufferedWriter.write(obj.print());
+		bufferedWriter.close();
+		
 		}
 	
 	public static void removeHelp() {
@@ -235,16 +256,28 @@ public class PencilBox {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
-		if (args.length == 1 && "view".equals(args[0])){
-			view();
-		} else if ("add".equals(args[0]) && args.length < 4) {
-			addHelp();
-		} else if ("add".equals(args[0]) && args.length == 4){
-			add(args);
-		} else if ("remove".equals(args[0]) && args.length < 3) {
-			removeHelp();
-		} else if ("remove".equals(args[0]) && args.length == 3){
-			remove(args);
+		switch(args[0]) {
+		case "view":
+			if (args.length == 1) {
+				view();
+			} else {
+				System.out.println("view doesn't take more arguments");
+			}
+			break;
+		case "add":
+			if(args.length == 4) {
+				add(args);
+			} else {
+				addHelp();
+			}
+			break;
+		case "remove":
+			if(args.length == 3) {
+				remove(args);
+			} else {
+				removeHelp();
+			}
+			break;
 		}
 		
 
