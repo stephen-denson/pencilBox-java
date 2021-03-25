@@ -38,7 +38,7 @@ class Pencil implements Item{
 	private String length;
 
 	public String getItem() {
-		return "Pencil";
+		return "pencil";
 	}
 
 	public String getBrand() {
@@ -65,10 +65,10 @@ class Pencil implements Item{
 class Eraser implements Item{
 
 	private String brand;
-	private String length;
+	private String shape;
 
 	public String getItem() {
-		return "Eraser";
+		return "eraser";
 	}
 
 	public String getBrand() {
@@ -76,7 +76,7 @@ class Eraser implements Item{
 	}
 
 	public String getProperty() {
-		return length;
+		return shape;
 	}
 
 	public String print() {
@@ -88,14 +88,14 @@ class Eraser implements Item{
 	}
 	
 	public void setProperty(String str) {
-		this.length = str;
+		this.shape = str;
 	}
 }
 
 class Sharpener implements Item{
 
 	private String brand;
-	private String length;
+	private String state;
 
 	public String getItem() {
 		return "sharpener";
@@ -106,7 +106,7 @@ class Sharpener implements Item{
 	}
 
 	public String getProperty() {
-		return length;
+		return state;
 	}
 
 	public String print() {
@@ -118,7 +118,7 @@ class Sharpener implements Item{
 	}
 	
 	public void setProperty(String str) {
-		this.length = str;
+		this.state = str;
 	}
 }
 
@@ -228,7 +228,7 @@ public class PencilBox {
 				item = scanner.next();
 				property1 = scanner.next();
 				property2 = scanner.next();
-				if(item.equals(args[1]) && property1.equals(args[2])) {
+				if(item.equalsIgnoreCase(args[1]) && property1.equalsIgnoreCase(args[2])) {
 					continue;
 				} else {
 					printWriter.println(item + "," + property1 + "," + property2);
